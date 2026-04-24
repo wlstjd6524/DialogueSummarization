@@ -86,94 +86,86 @@
 
 </table>
 
-## 💻 개발환경 및 도구
-- Python 3.10.0
-- Hardware Environment: Single GPU (NVIDIA RTX 3090, 24GB VRAM)
-- Model & Framework: PyTorch
-    - Hugging Face transformers, peft (LoRA)
-    - unsloth
-    - KoBART(Encoder Decoder), Solar Pro 10.4B, Qwen3 14B(Decoder-only), Solar Pro3 API(Data 증강)
-- Pandas, numpy ...
-- openai
-- Weights&Biases
-- tqdm
-- yaml, os, rouge
-- transformers
 
-## ✍🏻 팀 초기 방향성 잡기
-- [방향성](https://github.com/AIBootcamp20/dialogue-summarization-nlp_3/blob/main/Code/%EC%9D%B4%EC%A7%84%EC%84%B1/Announcement/%ED%8C%80%20%EC%B4%88%EA%B8%B0%20%EB%B0%A9%ED%96%A5%EC%84%B1%20%EC%9E%A1%EA%B8%B0.pdf)
+## 📺 Presentation
+[발표자료](https://github.com/user-attachments/files/27059403/NLP3._.pptx)
 
 
-## 📏 프로젝트 목적
-본 프로젝트는 일상적인 대화부터 복잡한 비즈니스 협상(부동산, 의료, 법률 등)까지 다양한 상황이 담긴 한국어 대화 데이터를 분석하고, 
-그 핵심만을 제3자 관점에서 1~2문장으로 압축하는 '한국어 대화 추상적 요약(Abstractive Summarization)' 구축을 목표로 합니다.
+## 📂 ReadME Index 
+[🎯 Project Overview (프로젝트 개요 및 목표)](#project-overview) <br>
 
-단순히 텍스트의 길이를 줄이는 것을 넘어, 다음과 같은 네 가지 핵심 목표를 달성하고자 집중했습니다.
+[⏱️ Project Duration & 🔧 Tech Stack (기간 및 기술스택)](#projectduration-techstack) <br>
 
-1. 복잡한 문맥과 팩트(Fact)의 정확한 추론: 여러 화자가 번갈아 말하는 다중 턴(Multi-turn) 환경에서 발생하는 노이즈(의미 없는 감탄사, 중복 표현, 불필요한 HTML 태그 제거 등)를 필터링하고, 화자 간의 행동이나 결정 사항을 왜곡 없이 추출합니다.
-2. 데이터 불균형(Long-tail) 문제 타파: 9,000여 개가 넘는 토픽 중 극소수의 훈련 데이터만 존재하는 고난도 희귀 상황(희귀 토픽)에서도 모델이 일관된 요약 성능을 발휘할 수 있도록, 약점을 찌르는 타겟팅 데이터 증강 파이프라인을 구축합니다.
-3. 제한된 컴퓨팅 자원의 극한 최적화: 단일 24GB VRAM이라는 제한된 하드웨어 환경의 한계(OOM)를 돌파하기 위해, 모델 경량화 기법(LoRA, PEFT)과 메모리 최적화 라이브러리(Unsloth), 그리고 정답에만 가중치를 업데이트하는 'Response-Only Loss' 기법을 도입하여 효율적인 거대 언어 모델(LLM) 파인튜닝 프로세스를 완성합니다.
-4. 팀원 전체가 파이프라인을 경험해보기: 팀원이 파이프라인을 나누어서 진행하는 것이 아닌 NLP 파이프라인을 전반적으로 경험하면서 여러가지 시행착오와 해결방법을 숙지하는 걸 중점으로 두고, 한가지 모델에만 국한되는 것이 아닌 여러가지 모델을 사용하고 그에 따른 다른 전처리 방법들을 모색하면서 여러가지 인사이트를 얻고자 하였습니다.
+[📊 Data Analysis & Hypothesis (데이터 분석 및 실험 방향성 설정)](#data-analysis) <br>
+
+[🚀 Experimental Progression (실험 과정 및 빌드업)](#experimental-progression) <br>
+
+[🧪 Final SOTA Architecture & Result (핵심 실험과 최종 아키텍처 및 최종결과)](#final-sota-architecture) <br>
+
+[🛠️ Troubleshooting & Engineering (문제 해결 및 인프라 안정화)](#troubleshooting-engineering) <br>
+
+[👥 Team Leadership & Management (팀 리더십 및 협업)](#teamleadership-management) <br>
+
+[📈 Retrospective & Future Work (회고 및 향후계획)](#retrospective-futurework)
 
 
-## 📁 프로젝트 구조
-```text
-Project/
-├─ data/
-│     ├─ train.csv/                 
-│     ├─ test.csv/                  
-│     ├─ dev.csv
-│     └─ sample_submission.csv
-│     
-│
-├─ BaseCode
-│     ├─ baseline.ipynb
-│     ├─ config.yaml
-│     ├─ requirements.txt
-│     └─ Ssolar_api.ipynb
-│
-├─ Code
-│     ├─ 박세희
-│          ├─ Kobart.ipynb
-│          └─ NLP_EDA.ipynb
-│     ├─ 서효림
-│          ├─ baseline_v6.ipynb
-│          ├─ Qwen3_8B_LoRA_Retrieval_v2.ipynb
-│          ├─ solar_api_v7.ipynb
-│          └─ 앙상블_Merge_Final.ipynb
-│     ├─ 유창준
-│          └─ NLP_EDA_2.ipynb
-│     ├─ 이건우
-│          ├─ baseline_kfold.ipynb          # SOTA Model
-│          ├─ baseline_lable_smooth_test_eda.ipynb
-│          └─ config_kfold_5_en1024_de_250
-│     ├─ 이진성
-│          ├─ EDA
-│              └─ EDA.ipynb
-│          ├─ Model
-│              ├─ Model_Save                
-│                    └─ 각종 Model 실험 Checkpoints 및 기록 파라미터 Save 저장요소들 존재
-│              ├─ outputs
-│                    └─ 각종 Model 실험 추론결과 저장
-│              ├─ unsloth_compiled_cache
-│                    └─ Unsloth 캐시 파일 저장
-│              ├─ wandb
-│                    └─ wandb Runtime 기록 저장
-│              ├─ config.yaml
-│              ├─ kobart.ipynb
-│              ├─ kobart_2stage.ipynb
-│              ├─ qwen.ipynb
-│              └─ solar_qlora
-│          ├─ Preprocessor
-│               ├─ PlusData
-│               └─ Preprocessor
-│          ├─ Record
-│               ├─ record_0304.txt
-│               ├─ record_0305.txt
-│               └─ record_0306.txt
-│          └─ requirements.txt
-└─ jpg 및 발표자료 PPT, PDF, 팀 초기 방향성 PPT
-```
+<a id="project-overview"></a>
+
+## 🎯 Project Overview
+### 프로젝트 배경
+- 본 프로젝트는 일상 대화부터 벌률, 의료 등 복잡한 도메인을 아우르는 다중 턴(Multi-turn) 한국어 대화 데이터를 기반으로, 제3자 관점의 핵심 요약(1~2 문장)을 생성하는 <b>추상적 요약 모델 파이프라인 구축</b> 을 목표로 합니다.
+- 단순히 베이스라인 모델을 파인튜닝하는 것을 넘어, 데이터의 질적 향상과 제한된 컴퓨팅 자원 내에서의 학습 효율성을 극대화하는 <b>실험 주도형 접근</b> 을 채택했습니다.
+
+### 핵심 과제
+- 복잡한 Multi-turn 문맥 내 팩트 일관성 유지 : 여러 화자가 교자하는 환경에서 화자 간의 의도와 결정 사항을 왜곡 없이 추출하고, 원본 데이터의 특성을 보존하는 최적의 Prompt 및 전처리 파이프라인 설계.
+- Long-tail 분포를 가지는 도메인 불균형 해소 : 9,000여 개 이상의 토픽 중 훈련 데이터가 턱없이 부족한 희귀 상황에 대응하기 위해 타겟팅 기반 데이터 증강 전략 수립.
+- 제한된 하드웨어 리소스(24GB VRAM) 극복 : 단일 GPU 환경에서 발생하는 OOM(Out Of Memory) 문제를 해결하기 위한 모델 경량화(PEFT/LoRA) 및 Unsloth 라이브러리 도입, 그리고 Response-Only Loss 기반의 메모리 최적화.
+
+### 핵심 평가 지표 및 최적화 목표
+단순 하이퍼파라미터 튜닝에 의존하지 않고, 데이터 중심 실험을 달성하기 위해 다음 4가지 평가지표를 핵심 타겟으로 삼고 성능을 개선했습니다.
+  - ROUGE-1
+  - ROUGE-2
+  - ROUGE-L
+  - 이 ROUGE Score 를 종합한 Final_Result
+  - 생성된 추상적 요약문이 정답과 형태소/단어 단위부터 문장 구조까지 얼마나 일치하는지 재현율(Recall) 기반으로 측정
+
+
+<a id="projectduration-techstack"></a>
+
+## ⏱️ Project Duration & 🔧 Tech Stack
+### ⏱️ Project Duration
+- 2026.02.26 ~ 2026.03.12
+
+### 🔧 Tech Stack
+| Category | Tech Stack |
+| :--- | :--- |
+| **Language** | Python 3.10 |
+| **Hardware** | Single GPU (NVIDIA RTX 3090, 24GB VRAM) |
+| **Deep Learning Framework** | PyTorch, Hugging Face (transformers) |
+| **LLM Models (Encoder-Decoder)**| KoBART |
+| **LLM Models (Decoder-Only)** | Solar Pro 10.4B, Qwen3 14B |
+| **LLM Optimization (경량화)** | PEFT (LoRA), Unsloth |
+| **Data Augmentation (증강)** | Solar Pro3 API, OpenAI API |
+| **Data Analysis & EDA** | Pandas, NumPy |
+| **Experiment Tracking & Metric** | Weights & Biases (wandb), rouge |
+| **Collaboration** | Slack, Zoom |
+
+
+<a id="data-analysis"></a>
+
+## 📊 Data Analysis & Hypothesis
+### 📷 기본 데이터 구성
+- Train 12,457 건 / Dev 499 건 / Test : 499 건
+- Fetures: `fname`, `dialogue`, `summary`, `topic` 등 결측치(Null) 가 없는 정제된 텍스트 데이터
+
+### Insight 1. 극단적 Long-Tail 불균형과 GIGO 를 고려한 타겟팅 증강
+
+
+
+
+
+
+
 
 
 ## 🔨 프로젝트 시스템 아키텍처
