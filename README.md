@@ -222,6 +222,33 @@ KoBART의 태생적 한계인 화자 혼동을 해결하기 위해, 거대 파�
 <a id="final-sota-architecture"></a>
 
 ## 🧪 Final SOTA Architecture & Result
+### 최종 아키텍처 도출
+단일 모델 실험(Stage Phase 1~3) 을 통해 확보한 <b>최적의 시퀀스 길이(1024)</b> 와 <b>말투 통일 및 노이즈 정제 데이터셋</b> 을 프로젝트의 핵심 자산으로 확정했습니다. <br>
+이 기반 위에서 모델의 변동성을 최소화하고 리더보드 점수를 극대화하기 위해, 팀 협업을 통해 <b>5-Fold 교차 검증 및 Label Smoothing 전략</b> 을 최종 파이프라인으로 채택했습니다. <br>
+
+### 핵심 기술 스택
+- 5-Fold Cross-Validation : 데이터를 5개의 폴드로 나눠서 독립적인 모델 5개를 학습시켰습니다. 이는 특정 검증 셋에 과적합 되는 것을 방지하고, 리더보드의 Private Score 하락을 막는 결정적인 방어 기제가 되었습니다.
+- Label Smoothing (factor = 0.1) : 요약문 생성 시 모델이 특정 단어에 과도하게 편향되는 것을 막아, 생성 품질의 유연성을 확보하고 할루시네이션 발생률을 낮추었습니다.
+- Inference Optimization : 5개 모델의 예측치를 결합하는 앙상블 추론과 `num_beams=5` 설정을 통해, 단순 생성보다 훨씬 정교하고 팩트에 충실한 요약문을 도출했습니다.
+
+### 🏆 Final Performance & Leaderboard
+- Final Model : KoBART (Encoder-Decoder, 5-Fold Ensemble)
+<img width="981" height="391" alt="Image" src="https://github.com/user-attachments/assets/efb017e7-2586-4e94-9b36-5c1df1216d7d" /> <br>
+
+- Final Score :
+    - Rouge1 : 0.5721
+    - Rouge2 : 0.3780
+    - RougeL : 0.4902
+    - Final_result : 48.0093
+
+Rank : 🥉 3rd
+
+
+<a id="troubleshooting-engineering"></a>
+
+## 🛠️ Troubleshooting & Engineering
+
+
 
 
 
@@ -319,17 +346,6 @@ API를 활용한 모델 앙상블 과정에서 분당 요청 수(RPM) 제한으�
 
 
 ---
-
-
-## 📈 결과
-
-### Leader Board
-<img width="981" height="391" alt="Image" src="https://github.com/user-attachments/assets/95b75ebe-059f-43a1-914f-dfc97874ae9d" />
-Rank 3 🥉
-
-
-## 📚 Presentation
-- [발표자료](https://github.com/AIBootcamp20/dialogue-summarization-nlp_3/blob/main/Code/%EC%9D%B4%EC%A7%84%EC%84%B1/Announcement/NLP3%EC%A1%B0_%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf)
 
 
 ## 🔎 프로젝트 한계 및 개선사항
