@@ -139,7 +139,7 @@
 ### 🔧 Tech Stack
 | Category | Tech Stack |
 | :--- | :--- |
-| **Language** | Python 3.10 |
+| **Language** | Python 3.10.0 |
 | **Hardware** | Single GPU (NVIDIA RTX 3090, 24GB VRAM) |
 | **Deep Learning Framework** | PyTorch, Hugging Face (transformers) |
 | **LLM Models (Encoder-Decoder)**| KoBART |
@@ -225,6 +225,8 @@ KoBART의 태생적 한계인 화자 혼동을 해결하기 위해, 거대 파�
 ### 최종 아키텍처 도출
 단일 모델 실험(Stage Phase 1~3) 을 통해 확보한 <b>최적의 시퀀스 길이(1024)</b> 와 <b>말투 통일 및 노이즈 정제 데이터셋</b> 을 프로젝트의 핵심 자산으로 확정했습니다. <br>
 이 기반 위에서 모델의 변동성을 최소화하고 리더보드 점수를 극대화하기 위해, 팀 협업을 통해 <b>5-Fold 교차 검증 및 Label Smoothing 전략</b> 을 최종 파이프라인으로 채택했습니다. <br>
+
+<img width="2816" height="1536" alt="Image" src="https://github.com/user-attachments/assets/d5c115d1-12cf-421f-838a-2cb427517b7c" /> <br>
 
 ### 핵심 기술 스택
 - 5-Fold Cross-Validation : 데이터를 5개의 폴드로 나눠서 독립적인 모델 5개를 학습시켰습니다. 이는 특정 검증 셋에 과적합 되는 것을 방지하고, 리더보드의 Private Score 하락을 막는 결정적인 방어 기제가 되었습니다.
