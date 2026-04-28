@@ -320,19 +320,3 @@ Computer Vision 과 관련된 딥러닝 프로젝트의 파이프라인에 대�
 EDA 를 진행하면서 특정 Topic 에만 데이터가 몰려 있는 현상을 발견해서 이러면 특정 Topic 에만 과적합이 발생해서 문제가 생길 수 있겠다 라고 판단하여 다른 Topic 에도 골고루 데이터를 증강하는 전략을 세우고 진행했었는데 프롬프트 부여에 정교함과 데이터 본질에 맞지 않게 설정하고 증강을 해서 기존 포맷에 맞지 않는 노이즈 데이터를 생성하는 바람에 시간을 많이 할애했던 점이 있었습니다. 추후에 데이터가 잘못된 데이터임을 인지한 후에 프롬프트를 정교화하고 본질에 맞는 데이터를 생성했는데 제공된 GPU 마감일 과 프로젝트 기간 관계상 완벽하게 세팅된 데이터를 많이 증강해보지 못한게 아쉬운 점으로 남는 것 같습니다. 그래서 추후에 이 부분을 발판 삼아 다른 태스크에서 양질의 데이터를 증강해보고 싶고,
 
 현업에서 강조되는 <b>제한된 자원속에서 리소스 관리하는 Solution</b> 에 대한 부분을 알게됐지만 조금 더 정교화 시켜서 다른 방법이 또 존재하는지에 대한 여부와 고도화 시켜 효율적인 리소스 자원관리를 조금 더 진행해보고 싶습니다.
-
-
-## 🌐 기술스택
-[KoBART] : https://huggingface.co/digit82/kobart-summarization
-
-[Optuna] : https://optuna.org 
-
-[Solar API] : https://developers.upstage.ai
-
-[Multilingual-e5-base] : https://huggingface.co/intfloat/multilingual-e5-base
-
-[Unsloth + Qwen3-8B] : https://github.com/unslothai/unsloth
-
-[Python-mecab-ko] : https://pypi.org/project/python-mecab-ko
-
-[Unsloth] : https://unsloth.ai/docs/models/tutorials
