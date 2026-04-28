@@ -232,7 +232,8 @@ KoBART의 태생적 한계인 화자 혼동을 해결하기 위해, 거대 파�
 - Inference Optimization : 5개 모델의 예측치를 결합하는 앙상블 추론과 `num_beams=5` 설정을 통해, 단순 생성보다 훨씬 정교하고 팩트에 충실한 요약문을 도출했습니다.
 
 ### 🏆 Final Performance & Leaderboard
-- Final Model : KoBART (Encoder-Decoder, 5-Fold Ensemble)
+- Final Model : KoBART (Encoder-Decoder, 5-Fold Ensemble) <br>
+
 <img width="981" height="391" alt="Image" src="https://github.com/user-attachments/assets/efb017e7-2586-4e94-9b36-5c1df1216d7d" /> <br>
 
 - Final Score :
